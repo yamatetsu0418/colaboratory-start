@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"></script>
+
+   
+ <div id="map" style="width:300px ; height:500px ;">地図</div>
+
+<script>
+  const map = L.map('map');
+  map.setView([35.725, 140.155], 15);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').
+  addTo(map);
+  
+</script>
+    
+</body>
+</html>

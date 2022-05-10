@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <script src="https://cdn.jsdelivr.net/npm/docx@7.1.1/build/index.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+<h1>docx sample</h1>
+<!-- <button onclick="createFile();">Generate DOCX</button> -->
+<button onclick="createFile();">Create</button> 
+
+<script>
+function createFile() {
+    const doc = new docx.Document({
+        creator: "マイナビ",
+        description: "これはサンプルで作ったファイルです。",
+        title: "サンプルドキュメント",
+        sections:[]
+    });
+
+
+    doc.addSection({
+      properties: {},
+      children: [
+        new docx.Paragraph({
+          text: "サンプルで書いたテキストです。 \n\n",
+        }),
+      ]
+     });
+
+
+    // ★
+    docx.Packer.toBlob(doc).then(blob) => {
+      saveAs(blob, "sample.docs");
+    });
+
+    // フォルダーしか使えない　改訂
+    // docx.Packer.toBlob(doc).then((blob) => {
+    //  saveAs(blob, "sample.docx");
+    // });
+
+    
+    
+    print(doc);
+    
+    
+  }
+
+function print(obj) {
+    const dom = document.querySelector('#output-area');
+    const old = dom.innerHTML;
+    dom.innerHTML = old + '<p>' + obj + '</p>';
+}
+</script>
+  
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/docxtemplater/3.25.4/docxtemplater.js"></script>
+  <script src="https://unpkg.com/pizzip@3.1.1/dist/pizzip.js"></script>
+  <script src="hppts://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+  <h1>docx-template sample.</h1>
+  <input type="file" onchange="dochange(event);">
+
+
+  <script>
+
+function dochange(event) {
+            const file = event.target.files[0];
+            if(fule) {
+              const reader = new FileReader();
+              reader.readAsArrayBuffer(file);
+              reader.onload = (event) => {
+              const data = event.target.result;
+              createFile(data);
+            }
+            }
+            }
+
+
+            // 出力データ
+            const temp_data = {
+              name: '山本太郎',
+              mail: 'test@test.jp',
+              tel: '080-4444-4444',
+            }
+
+            function createFile(data) {
+              const zip = new PizZip(data);
+              let doc;
+            
+
+            try {
+              doc = new docxtemplater(zip, {
+              paragraphLoop: true,
+              linebreaks: true,
+              });
+
+              // create document.
+              doc.setData(temp_data);
+              doc.render();
+
+              // save document
+              const out=doc.getZip().generate({
+                type:"blob",
+                mimeType: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+              });
+              saveAs(out, "output.docx");
+            
+            }catch(error) {
+              console.log(error);
+            }
+          }
+  </script>
+
+
+
+
+  
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+
+    <script src="https://bossanova.uk/jspreadsheet/v4/jexcel.js"></script>
+        <link rel="stylesheet" href="https://bossanova.uk/jspreadsheet/v4/jexcel.css" type="text/css" />
+        
+        <script src="https://jsuites.net/v4/jsuites.js"></script>
+        <link rel="stylesheet" href="https://jsuites.net/v4/jsuites.css" type="text/css" />
+
+        <h3>Jspreadsheet spreadsheet!</h3>
+        <div id="spreadsheet"></div>
+
+        
+        <script>
+          const target = document.getElementById('spreadsheet');
+
+          function dochange(event) {
+            const file = event.target.files[0];
+            if (file) {
+              const reader = new FileReader();
+              reader.readAsText(file);
+              reader.onload = (event2)=> {
+              const [heads,rows] = createData(event2.target.result);
+              createTable(heads, rows);
+             }
+            }
+          }
+
+
+          // CSVデータから２次元配列を作る
+          function createData(src) {
+            const rows = [];
+            const data = src.split('\r\n');
+            const heads = data[0].split(',');
+            for(let i in data) {
+              if (i == 0) { continue; }
+              let row  = data[i];
+              if(row == undefined) { break;}
+              rows.push(row.split(','));
+            }
+            return [heads,rows];
+          }
+
+          // 2次元配列をもとにスプレッドシート
+          
+
+            function createTable(heads, rows) {
+              target.innerHTML = '';
+              jspreadsheet(target, {
+                data: rows,
+                columns: [heads],
+              });
+            }
+            </script>
+
+            <div><input type="file" onchange="dochange(event);"></div>
+
+    
+
+
+
+
+</body>
+</html>
